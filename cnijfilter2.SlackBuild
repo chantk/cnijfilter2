@@ -111,7 +111,8 @@ for dir in tocanonij tocnpwg ; do
   popd
 done
 
-for dir in cmdtocanonij2 cmdtocanonij3 cnijbe2 lgmon3 rastertocanonij tocanonij tocnpwg; do
+common_pkg="cmdtocanonij2 cmdtocanonij3 cnijbe2 lgmon3 rastertocanonij tocanonij tocnpwg"
+for dir in $common_pkg; do
   pushd $dir
     make install DESTDIR=$PKG
   popd
@@ -145,11 +146,11 @@ cat ppd/NEWS > $PKG/usr/doc/$PRGNAM-$VERSION/NEWS
 # Copy all README to /usr/doc
 for dir in $common_pkg; do
   mkdir $PKG/usr/doc/$PRGNAM-$VERSION/$dir
-  cd $dir
-    for file in AUTHORS COPYING ChangeLog INSTALL LICENSE NEWS README; do
+  pushd $dir
+    for file in AUTHORS COPYING ChangeLog INSTALL LICENSE* NEWS README; do
       [ -f $file ] && cp -a $file $PKG/usr/doc/$PRGNAM-$VERSION/$dir
     done
-  cd ..
+  popd
 done
 cat $CWD/README > $PKG/usr/doc/$PRGNAM-$VERSION/README.SBo
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
