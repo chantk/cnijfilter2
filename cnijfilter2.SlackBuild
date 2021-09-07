@@ -79,7 +79,7 @@ find -L . \
  \( -type f \! -name autogen.sh \) \
   -exec chmod 644 {} \;
 
-sed -e '/GET_PROTOCOL/ s:^int:extern &:g' -i 'lgmon3/src/cnijlgmon3.c'
+patch -p1 < $CWD/gcc10.patch
 
 for dir in cmdtocanonij2 cmdtocanonij3 ; do
   pushd $dir
